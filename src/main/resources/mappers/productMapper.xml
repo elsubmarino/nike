@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductDAO">
+	<sql id="search">
+		<where>
+			<if test="keyword!=null and !keyword.toString().equals('')">
+				name like concat("%",#{keyword}) or
+				description like concat("%",#{keyword})
+			</if>
+			<if test="type!=null and !type.toString().equals('')">
+				type=#{type}
+			</if>
+
+		</where>
+	</sql>
+
+	<insert id="insert">
+		insert into
+		tbl_product(name,price,description,type,picture)
+		values(#{name},#{price},#{description},#{type},#{picture}))
+	</insert>
+	<delete id="delete" parameterType="int">
+		delete from tbl_product where
+		num=#{num}
+	</delete>
+	<select id="getProductDetails" parameterType="int" resultType="hashMap">
+		select product.num as num, product.name as name, product.price as price, product.description as description, product.type as type, product.picture as picture,
+		picture.url as url from
+		tbl_product product right outer join tbl_picture picture on product.num = picture.product_num where product.num=#{num}
+	</select>
+	<select id="getList" resultType="hashmap">
+select p.num,p.name,p.price,p.description,p.type,p.picture,p.created,count(c.num) as size_quantity from tbl_product p
+left outer join tbl_color c on p.num=c.product_num group by p.num
+		<include refid="search"/>
+		order by ${order} desc
+		limit #{startPage},#{perPageNum}
+		
+		
+	</select>
+	<update id="update" parameterType="int">
+		update tbl_product set
+		name=#{name}, price=#{price}, description=#{description},type=#{type},
+		picture=#{picture} where num=#{num}
+	</update>
+
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_product <include refid="search"/>
+	</select>
+</mapper>

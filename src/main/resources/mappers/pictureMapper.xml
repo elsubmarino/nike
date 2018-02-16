@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PictureDAO">
+	<insert id="insert">
+		insert into tbl_picture(url,product_num)
+		values(#{url},#{product_num}))
+	</insert>
+	<delete id="delete" parameterType="int">
+		delete from tbl_picture where
+		num=#{num}
+	</delete>
+	<select id="getList" parameterType="int" resultType="Picture">
+		select *
+		from tbl_picture where product_num=#{product_num}
+	</select>
+	<update id="update" parameterType="int">
+		update tbl_picture set
+		url=#{url} where num=#{num}
+	</update>
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_picture where
+		product_num=#{product_num}
+	</select>
+</mapper>

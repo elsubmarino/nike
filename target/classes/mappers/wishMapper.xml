@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WishDAO">
+	<insert id="insert">
+		insert into tbl_wish(product_num,username)
+		values(#{product_num},#{username})
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete from tbl_wish where
+		num=#{num}
+	</delete>
+
+	<select id="getList" parameterType="int" resultType="Cart">
+		select *
+		from tbl_wish where username=#{username}
+	</select>
+
+
+
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_wish where username=#{username}
+	</select>
+
+</mapper>

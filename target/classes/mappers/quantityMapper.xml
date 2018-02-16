@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QuantityDAO">
+	<insert id="insert">
+		insert into tbl_quantity(size_num,quantity)
+		values(#{size_num},#{quantity}})
+	</insert>
+	<delete id="delete" parameterType="int">
+		delete from tbl_quantity where num=#{num}
+	</delete>
+	<select id="getList" parameterType="int" resultType="Quantity">
+		select * from tbl_quantity where size_num=#{size_num}
+	</select>
+	
+		<update id="update" parameterType="int">
+		update tbl_quantity set quantity=#{quantity} where num=#{num}
+	</update>
+	
+		<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_quantity where size_num=#{size_num}
+	</select>
+</mapper>
